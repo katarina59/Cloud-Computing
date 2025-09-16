@@ -20,8 +20,8 @@ jobs:
     - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.katarina59 }}
-        password: ${{ secrets.dckr_pat_HLFZK4oC7IL5hktCjiHegcU6m-U }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     
     - name: Build and push Central App
       uses: docker/build-push-action@v5
@@ -30,8 +30,8 @@ jobs:
         file: ./CentralBikeShop/Dockerfile
         push: true
         tags: |
-          ${{ secrets.katarina59 }}/bike-shop-central:latest
-          ${{ secrets.katarina59 }}/bike-shop-central:${{ github.sha }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/bike-shop-central:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/bike-shop-central:${{ github.sha }}
     
     - name: Build and push Novi Sad App
       uses: docker/build-push-action@v5
@@ -40,8 +40,8 @@ jobs:
         file: ./BikeShopNoviSad/Dockerfile
         push: true
         tags: |
-          ${{ secrets.katarina59 }}/bike-shop-novi-sad:latest
-          ${{ secrets.katarina59 }}/bike-shop-novi-sad:${{ github.sha }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/bike-shop-novi-sad:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/bike-shop-novi-sad:${{ github.sha }}
     
     - name: Build and push Kragujevac App
       uses: docker/build-push-action@v5
@@ -50,8 +50,8 @@ jobs:
         file: ./BikeShopKragujevac/Dockerfile
         push: true
         tags: |
-          ${{ secrets.katarina59 }}/bike-shop-kragujevac:latest
-          ${{ secrets.katarina59 }}/bike-shop-kragujevac:${{ github.sha }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/bike-shop-kragujevac:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/bike-shop-kragujevac:${{ github.sha }}
     
     - name: Build and push Subotica App
       uses: docker/build-push-action@v5
@@ -60,5 +60,5 @@ jobs:
         file: ./BikeShopSubotica/Dockerfile
         push: true
         tags: |
-          ${{ secrets.katarina59 }}/bike-shop-subotica:latest
-          ${{ secrets.katarina59 }}/bike-shop-subotica:${{ github.sha }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/bike-shop-subotica:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/bike-shop-subotica:${{ github.sha }}

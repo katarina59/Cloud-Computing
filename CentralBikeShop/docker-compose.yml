@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  central_app:
+    build:
+      context: ./central_bike_shop
+      dockerfile: Dockerfile
+    container_name: central_bike_shop_app
+    environment:
+      DB_HOST: central_db
+      DB_PORT: 5432
+      DB_NAME: central_bike_shop
+      DB_USER: postgres
+      DB_PASSWORD: password123
+    ports:
+      - "5000:5000"
+    depends_on:
+      - central_db
+    networks:
+      - central_bike_shop_network
+    volumes:
+      - ./central_bike_shop:/app
+
+  central_db:
+    image: postgres:15-alpine
+    container_name: central_bike_shop_db
+    environment:
+      POSTGRES_DB: central_bike_shop
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+    volumes:
+      - central_data:/var/lib/postgresql/data
+      - ./sql/central_init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - central_bike_shop_network
+
+volumes:
+  central_data:
+    driver: local
+
+networks:
+  central_bike_shop_network:
+    driver: bridge

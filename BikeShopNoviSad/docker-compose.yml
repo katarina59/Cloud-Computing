@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   novi_sad_app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: katarina59/bike-shop-novi-sad:latest
     container_name: bike_shop_novi_sad_app
     environment:
       DB_HOST: novi_sad_db

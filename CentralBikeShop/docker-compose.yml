@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   central_app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: katarina59/bike-shop-central:latest
     container_name: central_bike_shop_app
     environment:
       DB_HOST: central_db

@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   subotica_app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: katarina59/bike-shop-subotica:latest
     container_name: bike_shop_subotica_app
     environment:
       DB_HOST: subotica_db

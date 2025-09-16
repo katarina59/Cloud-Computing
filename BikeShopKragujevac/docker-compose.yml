@@ -12,17 +12,16 @@ services:
       DB_NAME: bike_shop_kragujevac
       DB_USER: postgres
       DB_PASSWORD: password123
-      CENTRAL_URL: http://host.docker.internal:5000
+      CENTRAL_URL: http://central_app:5000
       GRAD_NAZIV: "Kragujevac"
     ports:
-      - "5002:5000"
+      - "5002:5002"
     depends_on:
       - kragujevac_db
-      - central_app
     networks:
-      - bike_shop_kragujevac_network
+      - bike_network
     volumes:
-      - ./bike_shop_kragujevac:/app
+      - .:/app
 
   kragujevac_db:
     image: postgres:15-alpine
@@ -32,16 +31,17 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password123
     ports:
-      - "5434:5432"
+      - "5435:5432"
     volumes:
       - kragujevac_data:/var/lib/postgresql/data
-      - ./sql/lokalna_init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./sql/local_init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - bike_shop_kragujevac_network
+      - bike_network
 
 volumes:
   kragujevac_data:
     driver: local
 
 networks:
-  bike_shop_kragujevac_network
+  bike_network:
+    external: true

@@ -12,17 +12,16 @@ services:
       DB_NAME: bike_shop_subotica
       DB_USER: postgres
       DB_PASSWORD: password123
-      CENTRALNA_URL: http://host.docker.internal:5000
+      CENTRALNA_URL: http://central_app:5000
       GRAD_NAZIV: "Subotica"
     ports:
-      - "5003:5000"
+      - "5003:5003"
     depends_on:
       - subotica_db
-      - central_app
     networks:
-      - bike_shop_subotica_network
+      - bike_network
     volumes:
-      - ./bike_shop_subotica:/app
+      - .:/app
 
   subotica_db:
     image: postgres:15-alpine
@@ -32,16 +31,17 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password123
     ports:
-      - "5434:5432"
+      - "5433:5432"
     volumes:
       - subotica_data:/var/lib/postgresql/data
-      - ./sql/lokalna_init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./sql/local_init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - bike_shop_subotica_network
+      - bike_network
 
 volumes:
   subotica_data:
     driver: local
 
 networks:
-  bike_shop_subotica_network
+  bike_network:
+    external: true

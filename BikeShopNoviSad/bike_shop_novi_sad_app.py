@@ -18,7 +18,7 @@ DB_CONFIG = {
 }
 
 # URL Centralne biciklane iz environment varijable
-CENTRAL_URL = os.getenv('CENTRAL_URL', "http://localhost:5000")
+CENTRAL_URL = os.getenv('CENTRAL_URL', "http://central_app:5000")
 GRAD_NAZIV = "Novi Sad"
 
 def get_db_connection():
@@ -100,6 +100,16 @@ def registruj_korisnika():
             "success": False,
             "message": "Interna greška servera"
         }), 500
+
+
+if __name__ == '__main__':
+    print("Pokretanje Bike Shop Novi Sad...")
+    print("Endpoints:")
+    print("GET  /health")
+    print("POST /registracija")
+    
+    app.run(host='0.0.0.0', port=5001, debug=True)
+
 
 # @app.route('/zaduzenje', methods=['POST'])
 # def zaduzi_bicikl():

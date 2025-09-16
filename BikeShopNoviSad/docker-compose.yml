@@ -12,17 +12,16 @@ services:
       DB_NAME: bike_shop_novi_sad
       DB_USER: postgres
       DB_PASSWORD: password123
-      CENTRAL_URL: http://host.docker.internal:5000
+      CENTRAL_URL: http://central_app:5000
       GRAD_NAZIV: "Novi Sad"
     ports:
-      - "5001:5000"
+      - "5001:5001"
     depends_on:
       - novi_sad_db
-      - central_app
     networks:
-      - bike_shop_novi_sad_network
+      - bike_network
     volumes:
-      - ./bike_shop_novi_sad:/app
+      - .:/app
 
   novi_sad_db:
     image: postgres:15-alpine
@@ -35,13 +34,14 @@ services:
       - "5434:5432"
     volumes:
       - novi_sad_data:/var/lib/postgresql/data
-      - ./sql/lokalna_init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./sql/local_init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - bike_shop_novi_sad_network
+      - bike_network
 
 volumes:
   novi_sad_data:
     driver: local
 
 networks:
-  bike_shop_novi_sad_network
+  bike_network:
+    external: true

@@ -11,7 +11,7 @@ app = Flask(__name__)
 # Database konfiguracija iz environment varijabli
 DB_CONFIG = {
     'host': os.getenv('DB_HOST', 'localhost'),
-    'database': os.getenv('DB_NAME', 'bike_shop_subotica'),
+    'database': os.getenv('DB_NAME', 'bike_shop_novi_sad'),
     'user': os.getenv('DB_USER', 'postgres'),
     'password': os.getenv('DB_PASSWORD', 'password123'),
     'port': int(os.getenv('DB_PORT', 5432))
@@ -19,7 +19,7 @@ DB_CONFIG = {
 
 # URL Centralne biciklane iz environment varijable
 CENTRAL_URL = os.getenv('CENTRAL_URL', "http://central_app:5000")
-GRAD_NAZIV = "Subotica"
+GRAD_NAZIV = "Kragujevac"
 
 def get_db_connection():
     """Kreiranje konekcije sa bazom podataka"""
@@ -108,4 +108,4 @@ if __name__ == '__main__':
     print("GET  /health")
     print("POST /registracija")
     
-    app.run(host='0.0.0.0', port=5003, debug=True)
+    app.run(host='0.0.0.0', port=5002, debug=True)

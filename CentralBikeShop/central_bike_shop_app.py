@@ -27,7 +27,7 @@ def get_db_connection():
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
-    return jsonify({"status": "OK", "service": "Centralna Biciklana"}), 200
+    return jsonify({"status": "OK", "service": "Central Bike Shop"}), 200
 
 @app.route('/korisnici/registracija', methods=['POST'])
 def registruj_korisnika():
@@ -330,13 +330,13 @@ def get_all_users():
         }), 500
 
 if __name__ == '__main__':
-    print("🚀 Pokretanje Centralne Biciklane...")
-    print("📍 Endpoints:")
-    print("   POST /korisnici/registracija")
-    print("   POST /korisnici/proveri-zaduzenje") 
-    print("   POST /korisnici/zaduzi-bicikl")
-    print("   POST /korisnici/razduzi-bicikl")
-    print("   GET  /korisnici")
-    print("   GET  /health")
+    print("Pokretanje Centralne Biciklane...")
+    print("Endpoints:")
+    print("POST /korisnici/registracija")
+    print("POST /korisnici/proveri-zaduzenje") 
+    print("POST /korisnici/zaduzi-bicikl")
+    print("POST /korisnici/razduzi-bicikl")
+    print("GET  /korisnici")
+    print("GET  /health")
     
     app.run(host='0.0.0.0', port=5000, debug=True)

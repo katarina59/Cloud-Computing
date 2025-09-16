@@ -22,4 +22,4 @@ COPY . .
 EXPOSE 5000
 
 # Komanda za pokretanje aplikacije
-CMD ["python", "app.py"]
+CMD ["python", "bike_shop_novi_sad_app.py"]

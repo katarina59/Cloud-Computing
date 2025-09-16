@@ -22,4 +22,5 @@ COPY . .
 EXPOSE 5000
 
 # Komanda za pokretanje aplikacije
-CMD ["python", "app.py"]
+CMD ["python", "central_bike_shop_app.py"]
+

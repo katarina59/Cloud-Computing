@@ -17,9 +17,9 @@ services:
     depends_on:
       - central_db
     networks:
-      - central_bike_shop_network
+      - bike_network
     volumes:
-      - ./central_bike_shop:/app
+      - .:/app
 
   central_db:
     image: postgres:15-alpine
@@ -34,12 +34,12 @@ services:
       - central_data:/var/lib/postgresql/data
       - ./sql/central_init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - central_bike_shop_network
+      - bike_network
 
 volumes:
   central_data:
     driver: local
 
 networks:
-  central_bike_shop_network:
-    driver: bridge
+  bike_network:
+    external: true

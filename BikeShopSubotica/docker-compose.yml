@@ -12,9 +12,10 @@ services:
       DB_NAME: bike_shop_subotica
       DB_USER: postgres
       DB_PASSWORD: password123
-      CENTRALNA_URL: http://central_app:5000
+      CENTRALNA_URL: http://host.docker.internal:5000
+      GRAD_NAZIV: "Subotica"
     ports:
-      - "5002:5000"
+      - "5003:5000"
     depends_on:
       - subotica_db
       - central_app

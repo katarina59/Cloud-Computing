@@ -12,7 +12,8 @@ services:
       DB_NAME: bike_shop_kragujevac
       DB_USER: postgres
       DB_PASSWORD: password123
-      CENTRALNA_URL: http://central_app:5000
+      CENTRAL_URL: http://host.docker.internal:5000
+      GRAD_NAZIV: "Kragujevac"
     ports:
       - "5002:5000"
     depends_on:

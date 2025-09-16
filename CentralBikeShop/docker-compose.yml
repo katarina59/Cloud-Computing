@@ -3,7 +3,7 @@ version: '3.8'
 services:
   central_app:
     build:
-      context: ./central_bike_shop
+      context: .
       dockerfile: Dockerfile
     container_name: central_bike_shop_app
     environment:

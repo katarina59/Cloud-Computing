@@ -12,9 +12,10 @@ services:
       DB_NAME: bike_shop_novi_sad
       DB_USER: postgres
       DB_PASSWORD: password123
-      CENTRALNA_URL: http://central_app:5000
+      CENTRAL_URL: http://host.docker.internal:5000
+      GRAD_NAZIV: "Novi Sad"
     ports:
-      - "5002:5000"
+      - "5001:5000"
     depends_on:
       - novi_sad_db
       - central_app

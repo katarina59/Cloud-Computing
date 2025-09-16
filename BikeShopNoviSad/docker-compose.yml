@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  novi_sad_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bike_shop_novi_sad_app
+    environment:
+      DB_HOST: novi_sad_db
+      DB_PORT: 5432
+      DB_NAME: bike_shop_novi_sad
+      DB_USER: postgres
+      DB_PASSWORD: password123
+      CENTRALNA_URL: http://central_app:5000
+    ports:
+      - "5002:5000"
+    depends_on:
+      - novi_sad_db
+      - central_app
+    networks:
+      - bike_shop_novi_sad_network
+    volumes:
+      - ./bike_shop_novi_sad:/app
+
+  novi_sad_db:
+    image: postgres:15-alpine
+    container_name: bike_shop_novi_sad_db
+    environment:
+      POSTGRES_DB: bike_shop_novi_sad
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5434:5432"
+    volumes:
+      - novi_sad_data:/var/lib/postgresql/data
+      - ./sql/lokalna_init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - bike_shop_novi_sad_network
+
+volumes:
+  novi_sad_data:
+    driver: local
+
+networks:
+  bike_shop_novi_sad_network

@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  kragujevac_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bike_shop_kragujevac_app
+    environment:
+      DB_HOST: kragujevac_db
+      DB_PORT: 5432
+      DB_NAME: bike_shop_kragujevac
+      DB_USER: postgres
+      DB_PASSWORD: password123
+      CENTRALNA_URL: http://central_app:5000
+    ports:
+      - "5002:5000"
+    depends_on:
+      - kragujevac_db
+      - central_app
+    networks:
+      - bike_shop_kragujevac_network
+    volumes:
+      - ./bike_shop_kragujevac:/app
+
+  kragujevac_db:
+    image: postgres:15-alpine
+    container_name: bike_shop_kragujevac_db
+    environment:
+      POSTGRES_DB: bike_shop_kragujevac
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5434:5432"
+    volumes:
+      - kragujevac_data:/var/lib/postgresql/data
+      - ./sql/lokalna_init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - bike_shop_kragujevac_network
+
+volumes:
+  kragujevac_data:
+    driver: local
+
+networks:
+  bike_shop_kragujevac_network

@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novi-sad-bike-shop
+  namespace: bike-shop
+  labels:
+    app: novi-sad-bike-shop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: novi-sad-bike-shop
+  template:
+    metadata:
+      labels:
+        app: novi-sad-bike-shop
+    spec:
+      containers:
+      - name: novi-sad-app
+        image: katarina59/bike-shop-novi-sad:latest
+        ports:
+        - containerPort: 5001
+        envFrom:
+        - configMapRef:
+            name: novi-sad-configmap
+        - secretRef:
+            name: novi-sad-secret  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novi-sad-db
+  namespace: bike-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: novi-sad-db
+  template:
+    metadata:
+      labels:
+        app: novi-sad-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: "bike_shop_novi_sad"
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "password123"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: novi-sad-db-pvc

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: novi-sad-configmap
+  namespace: bike-shop
+data:
+  DB_HOST: novi-sad-db-service
+  DB_PORT: "5432"
+  DB_NAME: bike_shop_novi_sad
+  DB_USER: postgres
+  CENTRAL_URL: http://central-app-service:5000
+  GRAD_NAZIV: "Novi Sad"

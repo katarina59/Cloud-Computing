@@ -46,7 +46,7 @@ def call_centralna_api(endpoint, data=None, method='POST'):
         
     except requests.exceptions.RequestException as e:
         print(f"Greška pri pozivu centralne API: {e}")
-        return None
+        return e
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -98,7 +98,7 @@ def registruj_korisnika():
         print(f"Greška pri registraciji: {e}")
         return jsonify({
             "success": False,
-            "message": "Interna greška servera"
+            "message": f"Interna greška servera: {e}"
         }), 500
 
 

@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: central-ingress
+  namespace: bike-shop
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: central.local
+      http:
+        paths:
+          - path: /CentralBikeShop(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: central-app-service
+                port:
+                  number: 5000

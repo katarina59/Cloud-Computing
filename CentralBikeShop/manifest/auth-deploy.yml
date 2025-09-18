@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: central-bike-shop
+  namespace: bike-shop
+  labels:
+    app: central-bike-shop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: central-bike-shop
+  template:
+    metadata:
+      labels:
+        app: central-bike-shop
+    spec:
+      containers:
+      - name: central-app
+        image: katarina59/bike-shop-central:latest
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: central-configmap
+        - secretRef:
+            name: central-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: central-db
+  namespace: bike-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: central-db
+  template:
+    metadata:
+      labels:
+        app: central-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: "central_bike_shop"
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "password123"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: central-db-pvc

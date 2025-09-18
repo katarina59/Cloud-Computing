@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Exposing port
-EXPOSE 5000
+EXPOSE 5001
 
 # Komanda za pokretanje aplikacije
 CMD ["python", "bike_shop_novi_sad_app.py"]

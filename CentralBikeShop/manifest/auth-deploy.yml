@@ -5,7 +5,7 @@ metadata:
   labels:
     app: central-bike-shop
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: central-bike-shop

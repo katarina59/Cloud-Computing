@@ -3,8 +3,10 @@ import psycopg2 # type: ignore
 from psycopg2.extras import RealDictCursor # type: ignore
 import os
 from datetime import datetime
+import logging
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.INFO)
 
 # Database konfiguracija iz environment varijabli
 DB_CONFIG = {
@@ -19,6 +21,22 @@ def get_db_connection():
     """Kreiranje konekcije sa bazom podataka"""
     try:
         conn = psycopg2.connect(**DB_CONFIG)
+
+        cursor = conn.cursor()
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS korisnici (
+            id SERIAL PRIMARY KEY,
+            jmbg VARCHAR(13) UNIQUE NOT NULL,
+            ime VARCHAR(50) NOT NULL,
+            prezime VARCHAR(50) NOT NULL,
+            adresa TEXT NOT NULL,
+            broj_aktivnih_bicikala INTEGER DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        conn.commit()
+        cursor.close()
+
         return conn
     except Exception as e:
         print(f"Greška pri konekciji sa bazom: {e}")
@@ -297,6 +315,7 @@ def razduzi_bicikl():
 @app.route('/korisnici', methods=['GET'])
 def get_all_users():
     """Vraća sve registrovane korisnike"""
+    logging.info("/korisnici endpoint je pogodjen")
     try:
         conn = get_db_connection()
         if not conn:
@@ -323,10 +342,10 @@ def get_all_users():
         }), 200
         
     except Exception as e:
-        print(f"Greška pri dohvatanju korisnika: {e}")
+        logging.info(f"Greška pri dohvatanju korisnika: {e}")
         return jsonify({
             "success": False,
-            "message": "Interna greška servera"
+            "message": f"Interna greška servera {e}"
         }), 500
 
 if __name__ == '__main__':

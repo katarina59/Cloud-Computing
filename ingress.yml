@@ -19,10 +19,10 @@ spec:
                 name: central-app-service
                 port:
                   number: 5000
-          - path: /ns
-            pathType: Prefix
+          - path: /ns(/|$)(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
-                name: ns-app-service
+                name: novi-sad-app-service
                 port:
-                  number: 5000
+                  number: 5001

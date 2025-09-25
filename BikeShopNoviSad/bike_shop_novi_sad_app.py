@@ -224,7 +224,7 @@ def zaduzi_bicikl():
         logging.info(f"Greška pri zaduženju bicikla: {e}")
         return jsonify({
             "success": False,
-            "message": "Interna greška servera"
+            "message": "Interna greška servera {e}"
         }), 500
 
 @app.route('/razduzivanje', methods=['POST'])

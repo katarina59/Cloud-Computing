@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subotica-bike-shop
+  labels:
+    app: subotica-bike-shop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: subotica-bike-shop
+  template:
+    metadata:
+      labels:
+        app: subotica-bike-shop
+    spec:
+      containers:
+      - name: subotica-app
+        image: katarina59/bike-shop-subotica:latest
+        ports:
+        - containerPort: 5003
+        envFrom:
+        - configMapRef:
+            name: subotica-configmap
+        - secretRef:
+            name: subotica-secret

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kragujevac-bike-shop
+  labels:
+    app: kragujevac-bike-shop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kragujevac-bike-shop
+  template:
+    metadata:
+      labels:
+        app: kragujevac-bike-shop
+    spec:
+      containers:
+      - name: kragujevac-app
+        image: katarina59/bike-shop-kragujevac:latest
+        ports:
+        - containerPort: 5002
+        envFrom:
+        - configMapRef:
+            name: kragujevac-configmap
+        - secretRef:
+            name: kragujevac-secret

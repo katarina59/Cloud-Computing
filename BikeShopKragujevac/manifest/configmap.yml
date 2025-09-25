@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kragujevac-configmap
+data:
+  DB_HOST: kragujevac-db-service
+  DB_PORT: "5432"
+  DB_NAME: bike_shop_kragujevac
+  DB_USER: postgres
+  CENTRAL_URL: http://bikeshopnina.com/central/
+  GRAD_NAZIV: "Novi Sad"

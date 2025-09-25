@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-kragujevac
+spec:
+  serviceName: "kragujevac-db-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-kragujevac
+  template:
+    metadata:
+      labels:
+        app: postgres-kragujevac
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: kragujevac-configmap
+              key: DB_USER
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: kragujevac-configmap
+              key: DB_NAME
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kragujevac-secret
+              key: DB_PASSWORD
+        volumeMounts:
+        - name: postgres-kragujevac-storage
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-kragujevac-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi

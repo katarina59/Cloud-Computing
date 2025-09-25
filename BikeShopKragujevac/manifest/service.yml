@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kragujevac-app-service
+spec:
+  selector:
+    app: kragujevac-bike-shop
+  ports:
+  - port: 5002
+    targetPort: 5002
+    protocol: TCP
+  type: ClusterIP

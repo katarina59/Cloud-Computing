@@ -26,3 +26,17 @@ spec:
                 name: novi-sad-app-service
                 port:
                   number: 5001
+          - path: /kragujevac(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: kragujevac-app-service
+                port:
+                  number: 5002
+          - path: /subotica(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: subotica-app-service
+                port:
+                  number: 5003

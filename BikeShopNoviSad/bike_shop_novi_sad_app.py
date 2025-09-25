@@ -5,8 +5,11 @@ from psycopg2.extras import RealDictCursor # type: ignore
 import requests
 from datetime import datetime, date
 import json
+import logging
+
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.INFO)
 
 # Database konfiguracija iz environment varijabli
 DB_CONFIG = {
@@ -218,7 +221,7 @@ def zaduzi_bicikl():
         }), 201
         
     except Exception as e:
-        print(f"Greška pri zaduženju bicikla: {e}")
+        logging.info(f"Greška pri zaduženju bicikla: {e}")
         return jsonify({
             "success": False,
             "message": "Interna greška servera"

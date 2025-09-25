@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres
+  name: postgres-novi-sad
 spec:
   serviceName: "novi-sad-db-service"
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: postgres-novi-sad
   template:
     metadata:
       labels:
-        app: postgres
+        app: postgres-novi-sad
     spec:
       containers:
       - name: postgres
@@ -35,11 +35,11 @@ spec:
               name: novi-sad-secret
               key: DB_PASSWORD
         volumeMounts:
-        - name: postgres-storage
+        - name: postgres-novi-sad-storage
           mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
   - metadata:
-      name: postgres-storage
+      name: postgres-novi-sad-storage
     spec:
       accessModes: ["ReadWriteOnce"]
       resources:

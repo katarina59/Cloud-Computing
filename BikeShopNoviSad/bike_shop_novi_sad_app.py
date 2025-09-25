@@ -28,6 +28,25 @@ def get_db_connection():
     """Kreiranje konekcije sa bazom podataka"""
     try:
         conn = psycopg2.connect(**DB_CONFIG)
+
+        cursor = conn.cursor()
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS zaduzenja (
+            id SERIAL PRIMARY KEY,
+            korisnik_id INTEGER NOT NULL,
+            jmbg VARCHAR(13) NOT NULL,
+            ime VARCHAR(50) NOT NULL,
+            prezime VARCHAR(50) NOT NULL,
+            oznaka_bicikla VARCHAR(20) NOT NULL,
+            tip_bicikla VARCHAR(30) NOT NULL,
+            datum_zaduzivanja DATE NOT NULL,
+            datum_razduzivanja DATE,
+            status VARCHAR(20) NOT NULL DEFAULT 'aktivan',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        conn.commit()
+        cursor.close()
         return conn
     except Exception as e:
         print(f"Greška pri konekciji sa bazom: {e}")
